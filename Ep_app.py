@@ -197,10 +197,10 @@ def main():
                     single_sample = np.array(feature_list).reshape(1, -1)
 
                     # Model Choice
-                    model_choice = st.selectbox("Select Model", ["Logistic Regression"])
+                    model_choice = st.selectbox("Select Model", ["Prediction Score"])
                     if st.button('Predict'):
-                        if model_choice == "Logistic Regression":
-                            loaded_model = load_model("models/logistic_regression_hepB_model.pkl")
+                        if model_choice == "Prediction Score":
+                            loaded_model = load_model("models/knn_hepB_model.pkl")
                             prediction = loaded_model.predict(single_sample)
                             pred_prob = loaded_model.predict_proba(single_sample)                            
                             
@@ -208,14 +208,14 @@ def main():
                         if prediction == 1:
                             st.warning("Patient Chance of Survival is Low")
                             pred_probability_score = {"Low":pred_prob[0][0]*100,"High":pred_prob[0][1]*100}
-                            st.subheader("Predicton Probability Score using {}".format(model_choice))
+                            st.subheader("Predicton Probability Score")
                             st.json(pred_probability_score)
                             st.markdown(prescriptive_message_temp,unsafe_allow_html=True) 
                             
                         else:
                             st.success("Patient Chance of Survival is High")
                             pred_probability_score = {"Low":pred_prob[0][0]*100,"High":pred_prob[0][1]*100} 
-                            st.subheader("Predicton Probability Score using {}".format(model_choice))
+                            st.subheader("Predicton Probability Score")
                             st.json(pred_probability_score)
                             st.markdown(prescriptive_message_temp,unsafe_allow_html=True)
                             
@@ -227,7 +227,7 @@ def main():
 
     
     elif choice == "SignUp":
-        new_username = st.text_input("User name")
+        new_username = st.text_input("Username")
         new_password = st.text_input("Password", type='password')   
 
         confirm_password = st.text_input("Confirm Password",type='password')
